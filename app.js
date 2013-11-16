@@ -27,6 +27,6 @@ app.use(stylus.middleware(
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    res.end('Shop guide message.');
+    res.end('Shop guide message!');
 });
 app.listen(config.server.port)
