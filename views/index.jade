@@ -1,4 +1,17 @@
 extend layout
 block content
-    p Hello #{name}.
+    div
+        if user
+            p
+                | Hey there #{user.name}. 
+                | You can now go to the follwing step.
+            p These are your top categories:
+            ul
+                each category in categories
+                    li= category.description
+        else
+            p Hello there.
+            p: a(href='/facebook') Get info from Facebook
+            p: a(href='#') Skip
+    
 

@@ -1,0 +1,226 @@
+[
+    {
+        "id": "es_leisure",
+        "name": "Leisure",
+        "fb_cats": [
+            "actor/director",
+            "movie",
+            "producer",
+            "writer",
+            "studio",
+            "movie theater",
+            "tv/movie award",
+            "fictional character",
+            "album",
+            "song",
+            "musician/band",
+            "musical instrument",
+            "playlist",
+            "music video",
+            "concert tour",
+            "concert venue",
+            "radio station",
+            "record label",
+            "music award",
+            "music chart",
+            "comedian",
+            "entertainer",
+            "dancer",
+            "tv show",
+            "tv network",
+            "tv channel",
+            "artist",
+            "movies/music",
+            "arts/entertainment/nightlife",
+            "museum/art gallery"
+        ]
+    },
+    {
+        "id": "es_contents",
+        "name": "Books and press",
+        "fb_cats": [
+            "book",
+            "author",
+            "book store",
+            "library",
+            "magazine",
+            "editor",
+            "journalist",
+            "news personality",
+            "media/news/publishing"
+        ]
+    },
+    {
+        "id": "es_food",
+        "name": "Food",
+        "fb_cats": [
+            "chef",
+            "wine/spirits",
+            "farming/agriculture",
+            "food/beverages",
+            "food/grocery"
+        ]
+    },
+    {
+        "id": "es_otherservices",
+        "name": "Other services",
+        "fb_cats": [
+            "lawyer",
+            "business person",
+            "product/service",
+            "consulting/business services",
+            "legal/law",
+            "education",
+            "engineering/construction",
+            "bank/financial institution",
+            "insurance company",
+            "event planning/event services",
+            "bank/financial services",
+            "professional services",
+            "business services"
+        ]
+    },
+    {
+        "id": "es_health",
+        "name": "Health",
+        "fb_cats": [
+            "doctor",
+            "health/medical/pharmaceuticals",
+            "vitamins/supplements",
+            "drugs",
+            "health/medical/pharmacy",
+            "hospital/clinic"
+        ]
+    },
+    {
+        "id": "es_sportsandtoys",
+        "name": "Sports and toys",
+        "fb_cats": [
+            "athlete",
+            "sports league",
+            "professional sports team",
+            "coach",
+            "amateur sports team",
+            "school sports team",
+            "outdoor gear/sporting goods",
+            "games/toys",
+            "sports venue",
+            "sports/recreation/activities"
+        ]
+    },
+    {
+        "id": "es_auto",
+        "name": "Auto",
+        "fb_cats": [
+            "cars",
+            "automobiles and parts",
+            "automotive"
+        ]
+    },
+    {
+        "id": "es_barsandrestaurants",
+        "name": "Bars and restaurants",
+        "fb_cats": [
+            "restaurant/cafe",
+            "bar",
+            "club"
+        ]
+    },
+    {
+        "id": "es_tech",
+        "name": "Technology",
+        "fb_cats": [
+            "website",
+            "camera/photo",
+            "computers",
+            "software",
+            "electronics",
+            "telecommunication",
+            "biotechnology",
+            "computers/technology",
+            "internet/software",
+            "app",
+            "app page"
+        ]
+    },
+    {
+        "id": "es_fashion",
+        "name": "Fashion",
+        "fb_cats": [
+            "bags/luggage",
+            "clothing",
+            "jewelry/watches"
+        ]
+    },
+    {
+        "id": "es_wellnessandbeauty",
+        "name": "Wellness and beauty",
+        "fb_cats": [
+            "health/beauty",
+            "spas/beauty/personal care"
+        ]
+    },
+    {
+        "id": "es_home",
+        "name": "Home",
+        "fb_cats": [
+            "office supplies",
+            "appliances",
+            "building materials",
+            "commercial equipment",
+            "home decor",
+            "furniture",
+            "household supplies",
+            "kitchen/cooking",
+            "patio/garden",
+            "tools/equipment",
+            "pet supplies",
+            "baby goods/kids goods",
+            "energy/utility",
+            "home improvement",
+            "pet services"
+        ]
+    },
+    {
+        "id": "es_hyper",
+        "name": "Hypermarkets",
+        "fb_cats": [
+            "retail and consumer merchandise",
+            "shopping/retail"
+        ]
+    },
+    {
+        "id": "es_transportation",
+        "name": "Transport",
+        "fb_cats": [
+            "transport/freight",
+            "transportation"
+        ]
+    },
+    {
+        "id": "es_travel",
+        "name": "Travel",
+        "fb_cats": [
+            "travel/leisure",
+            "landmark",
+            "transit stop",
+            "airport",
+            "attractions/things to do",
+            "tours/sightseeing"
+        ]
+    },
+    {
+        "id": "es_hotelservices",
+        "name": "Accommodation",
+        "fb_cats": [
+            "hotel"
+        ]
+    },
+    {
+        "id": "es_propertyservices",
+        "name": "Real state",
+        "fb_cats": [
+            "real estate"
+        ]
+    }
+]
