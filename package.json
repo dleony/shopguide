@@ -9,6 +9,7 @@
         "stylus": "*",
         "nib": "*",
         "facebook-node-sdk": "*",
+        "node-foursquare": "*",
         "geolib": "*"
     }
 }
