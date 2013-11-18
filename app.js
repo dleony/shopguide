@@ -1,3 +1,7 @@
+
+// Config file
+var config = require('./config.json');
+
 /*
  * Module dependencies
  */
@@ -5,15 +9,13 @@
 var express = require('express'),
     stylus = require('stylus'),
     nib = require('nib'),
-    Facebook = require('facebook-node-sdk');
+    Facebook = require('facebook-node-sdk'),
+    foursquare = require('node-foursquare')(config.foursquare);
 
 /*
  * Local modules
  */
 var catMapper = require('./cat-mapper.js');
-
-// Config file
-var config = require('./config.json');
 
 var app = express();
 function compile(str, path) {
@@ -36,8 +38,7 @@ app.use(express.cookieParser());
 app.use(express.session({ 'secret': 'ukr-2-0-fra' }));
 app.use(Facebook.middleware({
     appId: config.facebook.appId, 
-    secret: config.facebook.secret,
-    scope: 'user_birthday,user_likes,user_status'
+    secret: config.facebook.secret
 }));
 
 /*
@@ -52,7 +53,18 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/facebook', Facebook.loginRequired(), function (req, res) {
+app.get('/2', function (req, res) {
+    res.render('index', {
+        title: 'Home',
+        user: req.session.user,
+        categories: req.session.categories,
+        fqlink: foursquare.getAuthClientRedirectUrl()
+    });
+});
+
+app.get('/facebook', Facebook.loginRequired({
+        scope: 'user_birthday,user_likes,user_status'
+    }), function (req, res) {
     var categories = {};
     var processes = 2;
     req.facebook.api('/me/likes', function localLikes(err, likes) {
@@ -93,9 +105,25 @@ app.get('/facebook', Facebook.loginRequired(), function (req, res) {
     });
 });
 
-app.get('/foursquare', function(req, res) {
+app.get('/foursquare-2', function(req, res) {
     // TODO: Detect centroids of foursquare activity with an algorithm like:
     // https://gist.github.com/substack/7373338#comment-950073
+    foursquare.getAccessToken({
+        code: req.query.code
+    }, function(err, token) {
+        if (err) {
+            console.log('Foursquare error: ' + err);
+        } else {
+            foursquare.Users.getCheckins('self', {limit: 250}, token, function(err, result) {
+                var cins = result.checkins.items;
+                for (var i = 0; i < cins.length; i++) {
+                    console.log(i);
+                    console.log(cins[i].venue.location);
+                }
+                res.send('4sq done.');
+            })
+        }
+    });
 });
 
 app.listen(config.server.port)
