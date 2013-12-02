@@ -14,6 +14,8 @@ block content
                 data-cycle-next='.cycle-next')
             each place in places
                 div.location
+                    div#chart
+                        svg(style='height: 240px; width: 300px; float: left;')
                     div.map
                         - var mapImg = 'http://maps.googleapis.com/maps/api/staticmap?zoom=15&sensor=false&size=300x300&markers=||';
                         - mapImg += place.center.latitude + ',' + place.center.longitude
@@ -22,9 +24,12 @@ block content
         p
             | Something odd happened and we cannot show a list of places for you. Please go to the 
             a(href='/') initial page
-            | to define your profile.
+            |  to define your profile.
 
 block script
     script(src='/js/jquery.cycle2.min.js')
     script(src='/js/jquery.cycle2.carousel.min.js')
+    script(src='/js/d3.v2.min.js')
+    script(src='/js/nv.d3.min.js')
+    script(src='/js/shopguide.js')
     

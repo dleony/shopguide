@@ -1,4 +1,5 @@
-var request = require('request');
+var request = require('request'),
+    querystring = require('querystring');
 
 /*
  * Function defining a BBVAInnova instance
@@ -91,6 +92,35 @@ BBVAInnova.prototype.getCategories = function(callback) {
 
         callback(null, categories);
     });        
+}
+
+BBVAInnova.prototype.getAge = function(bday) {
+    var age = 0,
+        now = new Date();
+
+    if (now < bday) return 0;
+    
+    age = now.getFullYear() - bday.getFullYear();
+    if (now.getMonth() < bday.getMonth()) {
+        age--;
+    } else if (now.getMonth() === bday.getMonth() && now.getDate() < bday.getDate()) {
+        age--;
+    }
+
+    return age;    
+}
+
+BBVAInnova.prototype.getHash = function(gender, age) {
+    var hash = (gender === 'Male') ? 'M' : 'F';
+
+    hash += '#';
+
+    if (age <= 18) hash += '0';
+    else if (age <= 25) hash += '1';
+    else if (age <= 65) hash += (Math.floor((age - 26) / 10) + 2).toString();
+    else hash += '6';
+
+    return hash;
 }
 
 function fillRequiredParams(params) {

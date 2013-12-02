@@ -11,12 +11,14 @@ var express = require('express'),
     nib = require('nib'),
     Facebook = require('facebook-node-sdk'),
     foursquare = require('node-foursquare')(config.foursquare),
-    geolib = require('geolib');
+    geolib = require('geolib'),
+    async = require('async');
 
 /*
  * Local modules
  */
-var catMapper = require('./cat-mapper.js');
+var catMapper = require('./cat-mapper.js'),
+    BBVA = require('./bbva-innova.js');
 
 var app = express();
 function compile(str, path) {
@@ -56,6 +58,7 @@ app.get('/facebook', Facebook.loginRequired({
         scope: 'user_birthday,user_likes,user_status'
     }), function (req, res) {
     req.facebook.api('/me', function(err, user) {
+        console.log(user);
         req.session.user = {
             name: user.first_name,
             gender: user.gender,
@@ -191,6 +194,46 @@ app.get('/map', function(req, res) {
     res.render('map', {
         title: 'Map',
         places: req.session.places
+    });
+});
+
+app.get('/map-data', function(req, res) {
+    var bbva = new BBVA(config.bbva);
+
+    var age = bbva.getAge(new Date(req.session.user.birthday)),
+        hash = bbva.getHash(req.session.user.gender, age);
+    
+    async.map([req.session.places[0]], function(place) {
+        async.map([req.session.categories[0]], function(category) {
+            bbva.getCube({
+                latitude: place.center.latitude,
+                longitude: place.center.longitude,
+                category: category.code,
+                group_by: 'month'
+            }, function(err, result) {
+                var data_array = [];
+                result.forEach(function(data) {
+                    var pair = { month: data.date, value: 0 };
+                    for (var i=0; i < data.cube.length && hash !== data.cube[i].hash; i++);
+                    if (i < data.cube.length) {
+                        pair.value = data.cube[i].avg;
+                    }
+                    data_array.push(pair);
+                });  
+                return({category: category, data: data_array});
+            }); 
+        }, function(err, results) {
+            if (!err) {
+                return results;
+            }
+            return false;
+        });
+    }, function(err, results) {
+        if (!err) {
+            res.send(results);
+        } else {
+            res.send('Error: ' + err);
+        }
     });
 });
 

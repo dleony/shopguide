@@ -18,8 +18,8 @@ global-reset()
  * background color as variables
  */
 main-color = #4d5bfa
-ok-color = #6dfa7b
-skip-color = #fa4d5b
+ok-color = #5daa6b
+skip-color = #ea4d5b
 background-color = #faf9f0
 
 body
@@ -57,6 +57,72 @@ header
   strong
     font-weight bold
 
+  div#cats ul
+    margin 0 auto
+    right auto
+    width 200px
+
+    li.category
+      height 40px
+      margin 5px
+      padding-left 40px
+      background url(/images/es_otherservices.png) left center no-repeat
+      line-height 40px
+    
+    li.es_auto
+      background-image url(/images/es_auto.png)
+
+    li.es_fashion
+      background-image url(/images/es_otherservices.png)
+
+    li.es_home
+      background-image url(/images/es_otherservices.png)
+
+    li.es_leisure
+      background-image url(/images/es_leisure.png)
+
+    li.es_sportsandtoys
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_travel
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_barsandrestaurants
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_food
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_hotelservices
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_otherservices
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_tech
+      background-image url(/images/es_tech.png)
+
+    li.es_wellnessandbeauty
+      background-image url(/images/es_wellnessandbeauty.png) 3px 3px no-repeat
+
+    li.es_contents
+      background-image url(/images/es_contents.png) 3px 3px no-repeat
+
+    li.es_health
+      background-image url(/images/es_otherservices.png) 3px 3px no-repeat
+
+    li.es_hyper
+      background-image url(/images/es_hyper.png) 3px 3px no-repeat
+
+    li.es_propertyservices
+      background-image url(/images/es_propertyservices.png) 3px 3px no-repeat
+
+    li.es_transportation
+      background-image url(/images/es_transportation.png) 3px 3px no-repeat
+ 
+  div#catimg
+    text-align center
+
   a.button
     font-family 'Quicksand'
     font-weight bold
@@ -67,11 +133,16 @@ header
     border 1px solid
     border-color ok-color
     float left
+    &:hover 
+        color background-color
+        background-color ok-color
 
   a.skip-button
     @extends .main-content a.button
     border-color skip-color
     float right
+    &:hover
+        background-color skip-color
 
   div.location
     width 800px
