@@ -49,6 +49,7 @@ app.use(Facebook.middleware({
  */
 
 app.get('/', function (req, res) {
+    res.session = null;
     res.render('index', {
         title: 'Home'
     });
@@ -191,6 +192,32 @@ app.get('/foursquare-2', function(req, res) {
 });
 
 app.get('/map', function(req, res) {
+    var random = [
+        [40.434519, -3.719190],
+        [40.419264, -3.705903],
+        [40.421127, -3.685603],
+        [40.426390, -3.695565],
+        [40.428535, -3.667916],
+        [40.431081, -3.663259],
+        [40.404605, -3.702528]
+    ];
+    if (req.session && !req.session.places) {
+        var n = 3, len = random.length;
+        var places = new Array(n), taken = new Array(n);
+        while (n--) {
+            var x = Math.floor(Math.random() * len);
+            var aux = random[x in taken ? taken[x] : x];
+            places[n] = {
+                center: {
+                    latitude: aux[0],
+                    longitude: aux[1]
+                }
+            };
+            taken[x] = --len;
+        }
+        req.session.places = places;
+    }
+
     res.render('map', {
         title: 'Map',
         places: req.session.places
@@ -198,36 +225,83 @@ app.get('/map', function(req, res) {
 });
 
 app.get('/map-data', function(req, res) {
+    var placeId = req.query.id;
+    if (placeId === undefined || !req.session.places || !req.session.places[placeId]) {
+        res.send('Bad request');
+        return(false);
+    }
+
     var bbva = new BBVA(config.bbva);
 
-    var age = bbva.getAge(new Date(req.session.user.birthday)),
-        hash = bbva.getHash(req.session.user.gender, age);
+    var age, gender, hash;
+
+    if (req.session && req.session.user && req.session.user.birthday) {
+        age = bbva.getAge(new Date(req.session.user.birthday));
+    } else {
+        age = Math.floor(Math.random()*40 + 20);
+    }
+    if (req.session && req.session.user && req.session.user.gender) {
+        gender = req.session.user.gender.toLowerCase();
+    } else {
+        gender = (Math.random() > 0.5) ? 'male' : 'female'; 
+    }
+    hash = bbva.getHash(gender, age);
+
+    if (req.session && !req.session.categories) {
+        req.session.categories = bbva.getRandomCategories(3);
+    }
+
+    var place = req.session.places[placeId];
     
-    async.map([req.session.places[0]], function(place) {
-        async.map([req.session.categories[0]], function(category) {
-            bbva.getCube({
-                latitude: place.center.latitude,
-                longitude: place.center.longitude,
-                category: category.code,
-                group_by: 'month'
-            }, function(err, result) {
-                var data_array = [];
-                result.forEach(function(data) {
-                    var pair = { month: data.date, value: 0 };
-                    for (var i=0; i < data.cube.length && hash !== data.cube[i].hash; i++);
-                    if (i < data.cube.length) {
-                        pair.value = data.cube[i].avg;
+    async.mapSeries(req.session.categories, function(category, callback) {
+        bbva.getCube({
+            latitude: place.center.latitude,
+            longitude: place.center.longitude,
+            category: category.code,
+            group_by: 'month'
+        }, function(err, result) {
+            var data_array = [];
+            if (err) {
+                console.log(err);
+                data_array = [
+                    {
+                      "date": "201211",
+                      "value": 0
+                    },
+                    {
+                      "date": "201212",
+                      "value": 0
+                    },
+                    {
+                      "date": "201301",
+                      "value": 0
+                    },
+                    {
+                      "date": "201302",
+                      "value": 0
+                    },
+                    {
+                      "date": "201303",
+                      "value": 0
+                    },
+                    {
+                      "date": "201304",
+                      "value": 0
                     }
-                    data_array.push(pair);
-                });  
-                return({category: category, data: data_array});
-            }); 
-        }, function(err, results) {
-            if (!err) {
-                return results;
+                ];
+                callback(null, {key: category.description, values: data_array});
+                return(false);
             }
-            return false;
-        });
+            result.forEach(function(data) {
+                var pair = { date: data.date, value: 0 };
+                for (var i=0; i < data.cube.length && hash !== data.cube[i].hash; i++);
+                if (i < data.cube.length) {
+                    pair.value = data.cube[i].avg;
+                }
+                data_array.push(pair);
+            });  
+            callback(null, {key: category.description, values: data_array});
+        }); 
     }, function(err, results) {
         if (!err) {
             res.send(results);

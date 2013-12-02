@@ -1,4 +1,7 @@
 extend layout
+block head
+    link(rel='stylesheet', href='/stylesheets/nv.d3.css')
+
 block content
     if places && places.length > 0
         if places.length > 1
@@ -12,11 +15,12 @@ block content
                 data-cycle-fx='scrollHorz'
                 data-cycle-prev='.cycle-prev'
                 data-cycle-next='.cycle-next')
-            each place in places
+            each place, index in places
                 div.location
-                    div#chart
-                        svg(style='height: 240px; width: 300px; float: left;')
+                    div(id='chart' + index)
+                        svg(style='height: 400px; width: 500px; float: left;')
                     div.map
+                        p Map of the location:
                         - var mapImg = 'http://maps.googleapis.com/maps/api/staticmap?zoom=15&sensor=false&size=300x300&markers=||';
                         - mapImg += place.center.latitude + ',' + place.center.longitude
                         img(src=mapImg)                

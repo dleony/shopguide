@@ -26,10 +26,17 @@ BBVAInnova.prototype.getCube = function(params, callback) {
             callback(error);
             return false;
         }
-        var bodyJson = JSON.parse(body),
-            stats = bodyJson.data.stats;
 
-        callback(null, stats);
+        var bodyJson = JSON.parse(body);
+
+        if (bodyJson.data && bodyJson.data.stats) {
+            var stats = bodyJson.data.stats;
+            callback(null, stats);
+            return(true)
+        }
+        callback('No data.');
+        return(false);
+            
     });        
 }
 
@@ -111,7 +118,7 @@ BBVAInnova.prototype.getAge = function(bday) {
 }
 
 BBVAInnova.prototype.getHash = function(gender, age) {
-    var hash = (gender === 'Male') ? 'M' : 'F';
+    var hash = (gender === 'male') ? 'M' : 'F';
 
     hash += '#';
 
@@ -122,6 +129,88 @@ BBVAInnova.prototype.getHash = function(gender, age) {
 
     return hash;
 }
+
+BBVAInnova.prototype.getRandomCategories = function(n) {
+    var bbva_cats = [
+        {
+          "code": "es_auto",
+          "description": "Auto"
+        },
+        {
+          "code": "es_barsandrestaurants",
+          "description": "Bars and restaurants"
+        },
+        {
+          "code": "es_contents",
+          "description": "Books and press"
+        },
+        {
+          "code": "es_fashion",
+          "description": "Fashion"
+        },
+        {
+          "code": "es_food",
+          "description": "Food"
+        },
+        {
+          "code": "es_health",
+          "description": "Health"
+        },
+        {
+          "code": "es_home",
+          "description": "Home"
+        },
+        {
+          "code": "es_hotelservices",
+          "description": "Accommodation"
+        },
+        {
+          "code": "es_hyper",
+          "description": "Hypermarkets"
+        },
+        {
+          "code": "es_leisure",
+          "description": "Leisure"
+        },
+        {
+          "code": "es_otherservices",
+          "description": "Other services"
+        },
+        {
+          "code": "es_propertyservices",
+          "description": "Real state"
+        },
+        {
+          "code": "es_sportsandtoys",
+          "description": "Sports and toys"
+        },
+        {
+          "code": "es_tech",
+          "description": "Technology"
+        },
+        {
+          "code": "es_transportation",
+          "description": "Transport"
+        },
+        {
+          "code": "es_travel",
+          "description": "Travel"
+        },
+        {
+          "code": "es_wellnessandbeauty",
+          "description": "Wellness and beauty"
+        }
+    ];
+    var len = bbva_cats.length;
+    var result = new Array(n), taken = new Array(n);
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = bbva_cats[x in taken ? taken[x] : x];
+        taken[x] = --len;
+    }
+    return(result);
+}
+
 
 function fillRequiredParams(params) {
     params.date_min = params.date_min || '20121101';
