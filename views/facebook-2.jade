@@ -1,0 +1,11 @@
+if categories.length > 0
+    p These are the categories we have found for you:
+    ul
+        each cat in categories
+            li(class = cat.code)= cat.description
+else
+    p
+        | Hmm, we couldn't find relevant categories in your profile. We'll pick
+        | 3 random ones.
+
+a(href='/foursquare').button Continue

@@ -18,6 +18,8 @@ global-reset()
  * background color as variables
  */
 main-color = #4d5bfa
+ok-color = #6dfa7b
+skip-color = #fa4d5b
 background-color = #faf9f0
 
 body
@@ -35,24 +37,71 @@ header
   border-bottom 1px solid darken(main-color, 30%)
   text-shadow 0px -1px 0px darken(main-color, 30%)
 
+  a
+    color #fff
+    text-decoration none
+
 .container
-  width 500px
+  width 800px
   margin 50px auto
+  height 450px
   overflow hidden
 
 .main-content
   float left
-  width 300px
+  width 800px
 
   p
     margin-bottom 20px
+  
+  strong
+    font-weight bold
+
+  a.button
+    font-family 'Quicksand'
+    font-weight bold
+    text-decoration none
+    color main-color
+    padding 5px 10px
+    margin 10px
+    border 1px solid
+    border-color ok-color
+    float left
+
+  a.skip-button
+    @extends .main-content a.button
+    border-color skip-color
+    float right
+
+  div.location
+    width 800px
+
+  div.map
+    float right
+
+  div.cycle-prev
+    position absolute
+    top 0
+    margin 50px 0
+    left 0
+    width 10%
+    z-index 800
+    height 80%
+    cursor pointer
+    background url(/images/left.png) 50% 50% no-repeat
+
+  div.cycle-next
+    @extends .main-content div.cycle-prev
+    left auto
+    right 0
+    background url(/images/right.png) 50% 50% no-repeat
 
 p
   line-height 1.8
 
 footer
   width 500px
-  margin 50px auto
+  margin 10px auto
   border-top 1px dotted #ccc
   padding-top 5px
   font-size 13px

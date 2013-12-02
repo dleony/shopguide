@@ -1,0 +1,30 @@
+extend layout
+block content
+    if places && places.length > 0
+        if places.length > 1
+            p These are the places we have found for you:
+            div.cycle-prev
+            div.cycle-next
+        else
+            p We found this place that might be of interest for you:
+        div.cycle-slideshow(data-cycle-slides='> div.location'
+                data-cycle-timeout=0
+                data-cycle-fx='scrollHorz'
+                data-cycle-prev='.cycle-prev'
+                data-cycle-next='.cycle-next')
+            each place in places
+                div.location
+                    div.map
+                        - var mapImg = 'http://maps.googleapis.com/maps/api/staticmap?zoom=15&sensor=false&size=300x300&markers=||';
+                        - mapImg += place.center.latitude + ',' + place.center.longitude
+                        img(src=mapImg)                
+    else
+        p
+            | Something odd happened and we cannot show a list of places for you. Please go to the 
+            a(href='/') initial page
+            | to define your profile.
+
+block script
+    script(src='/js/jquery.cycle2.min.js')
+    script(src='/js/jquery.cycle2.carousel.min.js')
+    

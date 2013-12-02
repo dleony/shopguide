@@ -1,18 +1,15 @@
 extend layout
 block content
     div
-        if user
-            p
-                | Hey there #{user.name}. 
-                | You can now go to the follwing step.
-            p These are your top categories:
-            ul
-                each category in categories
-                    li= category.description
-        else
-            p Hello there.
-            p: a(href='/facebook') Get info from Facebook
-            p: a(href='#') Skip
+        p
+            | Hello there. First, we would like to get some info about you, like your 
+            strong age 
+            | and the things you like in order to detect the 
+            strong categories 
+            | you would like to review.
+        p
+            | For this reason, we would appreciate if you let us get this information from Facebook.
+            | If you don't want to do this, you can skip this step and we will use random data.
+        p: a(href='/facebook').button Get info from Facebook
+        p: a(href='/foursquare').skip-button Skip
     
-    if fqlink
-        p: a(href=fqlink) Get info from Foursquare

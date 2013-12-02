@@ -5,10 +5,18 @@ html
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         header
-            h1 ShopGuide
+            a(href='/')
+                h1 ShopGuide
         .container
             .main-content
                 block content
         footer
-            p Shopguide - made thanks to Node.js, Express, Jade and Stylus
-
+            p
+                | Shopguide - made in order to participate in 
+                a(href='https://www.centrodeinnovacionbbva.com/innovachallenge') BBVA Innova Challenge
+            p
+                | Site made with Node.js, Jade and Stylus. Icons given by 
+                a(href='http://glyphicons.com') Glyphicons.com
+            script(src='http://code.jquery.com/jquery.js')
+            script(src='/js/shopguide.js')
+            block script

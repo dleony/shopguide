@@ -10,6 +10,7 @@
         "nib": "*",
         "facebook-node-sdk": "*",
         "node-foursquare": "*",
-        "geolib": "*"
+        "geolib": "*",
+        "request": "*"
     }
 }
