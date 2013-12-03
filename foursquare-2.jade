@@ -1,9 +1,0 @@
-extend layout
-block content
-    div
-        if places.length > 0
-            if (places.lenth == 1)
-                p We selected one location that is of interest for you.
-            else
-                p We selected #{places.length} locations of interest.
-        p: a(href=map) See the map
