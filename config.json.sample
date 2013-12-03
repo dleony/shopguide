@@ -1,5 +1,20 @@
 {
 	"server": {
 		"port": 3000
-	}
+	},
+    "facebook": {
+        "appId": "YOUR-FACEBOOK-APP-ID-HERE",
+        "secret": "YOUR-FACEBOOK-APP-SECRETE-HERE"
+    },
+    "bbva": {
+        "appId": "YOUR-BBVA-DATA-APP-ID-HERE",
+        "appKey": "YOUR-BBVA-DATA-API-KEY-HERE"
+    },
+    "foursquare": {
+        "secrets": {
+            "clientId": "YOUR-FOURSQUARE-APP-ID-HERE",
+            "clientSecret": "YOUR-FOURSQUARE-APP-SECRET-HERE",
+            "redirectUrl": "YOUR-FOURSQUARE-REDIRECT-URL-HERE"
+        }
+    }
 }
